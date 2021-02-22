@@ -29,14 +29,14 @@ implementation
 
 procedure TfDatasetLoop.btDeletarParesClick(Sender: TObject);
 begin
-  ClientDataSet.First;
+  ClientDataSet.Last;
 
-  while not ClientDataSet.Eof do
+  while not ClientDataSet.Bof do
   begin
     if ClientDataSet.FieldByName('Field2').AsInteger mod 2 = 0 then
       ClientDataSet.Delete;
 
-    ClientDataSet.Next;
+    ClientDataSet.Prior;
   end;
 end;
 
