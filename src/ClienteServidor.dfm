@@ -22,7 +22,6 @@ object fClienteServidor: TfClienteServidor
     Height = 17
     Align = alBottom
     TabOrder = 0
-    ExplicitWidth = 347
   end
   object btEnviarSemErros: TButton
     Left = 56
@@ -49,5 +48,6 @@ object fClienteServidor: TfClienteServidor
     Height = 25
     Caption = 'Enviar paralelo'
     TabOrder = 3
+    OnClick = btEnviarParaleloClick
   end
 end

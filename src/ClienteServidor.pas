@@ -24,11 +24,14 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btEnviarSemErrosClick(Sender: TObject);
     procedure btEnviarComErrosClick(Sender: TObject);
+    procedure btEnviarParaleloClick(Sender: TObject);
   private
     FPath: string;
     FServidor: TServidor;
 
     function InitDataset: TClientDataset;
+    procedure InicializarProgressBar;
+    procedure AtualizarProgressBar(Indice: Integer);
   public
   end;
 
@@ -45,17 +48,25 @@ uses
 
 {$R *.dfm}
 
+procedure TfClienteServidor.AtualizarProgressBar(Indice: Integer);
+begin
+  ProgressBar.Position:= Indice;
+end;
+
 procedure TfClienteServidor.btEnviarComErrosClick(Sender: TObject);
 var
   cds: TClientDataset;
   i: Integer;
 begin
+  InicializarProgressBar;
+
   cds := InitDataset;
   for i := 0 to QTD_ARQUIVOS_ENVIAR do
   begin
     cds.Append;
     TBlobField(cds.FieldByName('Arquivo')).LoadFromFile(FPath);
     cds.Post;
+    AtualizarProgressBar(i);
 
     {$REGION Simulação de erro, não alterar}
     if i = (QTD_ARQUIVOS_ENVIAR/2) then
@@ -66,17 +77,25 @@ begin
   FServidor.SalvarArquivos(cds.Data);
 end;
 
+procedure TfClienteServidor.btEnviarParaleloClick(Sender: TObject);
+begin
+  InicializarProgressBar;
+
+end;
+
 procedure TfClienteServidor.btEnviarSemErrosClick(Sender: TObject);
 var
   cds: TClientDataset;
   i: Integer;
 begin
+  InicializarProgressBar;
   cds := InitDataset;
   for i := 0 to QTD_ARQUIVOS_ENVIAR do
   begin
     cds.Append;
     TBlobField(cds.FieldByName('Arquivo')).LoadFromFile(FPath);
     cds.Post;
+    AtualizarProgressBar(i);
   end;
 
   FServidor.SalvarArquivos(cds.Data);
@@ -89,6 +108,12 @@ begin
   FPath := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0))) + 'pdf.pdf';
   {$WARN SYMBOL_PLATFORM ON}
   FServidor := TServidor.Create;
+end;
+
+procedure TfClienteServidor.InicializarProgressBar;
+begin
+  ProgressBar.Min:= 0;
+  ProgressBar.Max:= QTD_ARQUIVOS_ENVIAR;
 end;
 
 function TfClienteServidor.InitDataset: TClientDataset;
