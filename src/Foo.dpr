@@ -4,7 +4,8 @@ uses
   Vcl.Forms,
   Main in 'Main.pas' {fMain},
   DatasetLoop in 'DatasetLoop.pas' {fDatasetLoop},
-  ClienteServidor in 'ClienteServidor.pas' {fClienteServidor};
+  ClienteServidor in 'ClienteServidor.pas' {fClienteServidor},
+  GerenciadorDeExcecoes in 'GerenciadorDeExcecoes.pas';
 
 {$R *.res}
 
