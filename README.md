@@ -39,8 +39,8 @@ Solução: A repetição não deleta dois pares seguidos, uma vez que, ao fazer 
 
 `Defeito 2: na tela ClienteServidor, ocorre erro "Out of Memory" ao clicar no botão "Enviar sem erros". Objetivo: que não ocorra erro por falta de memória, e que todos os arquivos sejam enviados para a pasta Servidor normalmente.`
 
-Solução:
+Solução: Sabidamente, o clientdataset tem problemas de consumo de memória. Neste caso, eu tentaria solucionar usando uma lista, talvez om generics, ampliando a capacidade de armazenamento em memória dos arquivos, antes de gravar. Imagino que, para a gravação em lote, que é o que parece estar sendo simulado aqui, é a melhor solução sem utilziar componentes não nativos do Delphi. (não implementado) 
 
 `Defeito 3: na tela ClienteServidor, ao clicar no botão "Enviar com erros", os arquivos enviados anteriormente não são apagados da pasta Servidor. Objetivo: quando ocorrer erro na operação, que é o caso que esse botão simula, os arquivos copiados anteriormente devem ser apagados, simulando um "rollback". Ou seja, no fim da operação, os arquivos devem continuar na pasta apenas se não ocorreu erro na operação. obs: não é para ser corrigido o erro que ocorre ao clicar nesse botão, visto que ele serve justamente para simular um erro.`
 
-Solução:
+Solução: A solução aqui parece simples, em caso de exceção, armazenar o caminho de cada arquivo gravado em uma lista e, em caso de erro, varrer a lista, deletando os arquivos da lista. 

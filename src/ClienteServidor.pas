@@ -134,11 +134,14 @@ function TServidor.SalvarArquivos(AData: OleVariant): Boolean;
 var
   cds: TClientDataSet;
   FileName: string;
+  ListaArquivosSalvos: TStringList;
+  i: integer;
 begin
   Result := False;
   try
     cds := TClientDataset.Create(nil);
     cds.Data := AData;
+    ListaArquivosSalvos:= TStringList.Create;
 
     {$REGION Simulação de erro, não alterar}
     if cds.RecordCount = 0 then
@@ -150,6 +153,8 @@ begin
     while not cds.Eof do
     begin
       FileName := FPath + cds.RecNo.ToString + '.pdf';
+      ListaArquivosSalvos.Add(FileName);
+
       if TFile.Exists(FileName) then
         TFile.Delete(FileName);
 
@@ -159,6 +164,14 @@ begin
 
     Result := True;
   except
+    if Assigned(ListaArquivosSalvos) then
+    begin
+      for I := 0 to ListaArquivosSalvos.Count - 1 do
+      begin
+        TFile.Delete(ListaArquivosSalvos[i]);
+      end;
+    end;
+
     raise;
   end;
 end;
