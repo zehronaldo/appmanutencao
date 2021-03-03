@@ -35,7 +35,7 @@ Corrija cada defeito descrito abaixo. Na descrição do defeito terá o problema
 
 `Defeito 1: na tela DatasetLoop, ao clicar no botão "Deletar pares" não deleta todos os pares do dataset. Objetivo: que todos os números pares sejam deletados`
 
-Solução:
+Solução: A repetição não deleta dois pares seguidos, uma vez que, ao fazer um delete, os indices são refeitos a partir do registo deletado, mas o laço de repetição continua indo pra frente, "pulando" dois registros quando há a deleção. Modifiquei a repetição para ser feita do fim para o início do dataset, deletando sempre uma posição por onde o indice já passou. 
 
 `Defeito 2: na tela ClienteServidor, ocorre erro "Out of Memory" ao clicar no botão "Enviar sem erros". Objetivo: que não ocorra erro por falta de memória, e que todos os arquivos sejam enviados para a pasta Servidor normalmente.`
 
